@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { JiraService } from '../../services/jira.service';
 
 @Component({
   selector: 'app-worklog',
@@ -6,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorklogComponent implements OnInit {
 
-  constructor() { }
+  proyectos: any[] = [];
+
+  constructor(
+    private _jiraService: JiraService
+  ) {
+
+   }
 
   ngOnInit() {
+    this.proyectos = this._jiraService.getProyectos();
   }
 
 }
