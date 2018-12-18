@@ -1,8 +1,18 @@
 # JiraApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.2.
+node 8.10.0
+npm 3.5.2
 
 ## Development server
+
+Clone the project https://github.com/claudiomelendres/jiraApp.git
+go to folder path
+- npm install
+
+- ng Serve -o
+
+
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
