@@ -6,7 +6,7 @@ npm 3.5.2
 
 ## Development server
 
-Clone the project
+Clone the project https://github.com/claudiomelendres/jiraApp.git
 go to folder path
 - npm install
 
