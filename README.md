@@ -8,9 +8,9 @@ npm 3.5.2
 
 Clone the project
 go to folder path
->npm install
+- npm install
 and
->ng Serve -o
+- ng Serve -o
 
 
 
