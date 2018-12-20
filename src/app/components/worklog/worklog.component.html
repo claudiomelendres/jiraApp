@@ -1,7 +1,6 @@
-<p>
-    worklog works!
-</p>
-
-<div>
-    {{ proyectos[0].nombre }} {{ proyectos[1].nombre }}
-</div>
+<app-issue
+    *ngFor="let issue of proyectos; let i = index"
+     [issue]="issue"
+     [verticalLayout]="verticalLayout"
+     [id]="i">
+</app-issue>

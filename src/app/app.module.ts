@@ -13,6 +13,8 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { WorklogComponent } from './components/worklog/worklog.component';
 import { ChartsComponent } from './components/charts/charts.component';
+import { IssueComponent } from './components/issue/issue.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,13 +23,15 @@ import { ChartsComponent } from './components/charts/charts.component';
     HomeComponent,
     AboutComponent,
     WorklogComponent,
-    ChartsComponent
+    ChartsComponent,
+    IssueComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    APP_ROUTING
+    APP_ROUTING,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,14 +9,14 @@ export class JiraService {
 
   private proyectos: any = [
     {
-      nombre: 'Proyecto 1',
-      Historias: 'historia 2',
-      Horas: '30'
+      name: 'Proyecto 1',
+      title: 'BAN 5 (2h)',
+      hours: '2d15h15m'
     },
     {
-      nombre: 'Proyecto 2',
-      Historias: 'historia 2',
-      Horas: '30'
+      name: 'Proyecto 2',
+      title: 'BAN 8 (3h)',
+      hours: '30'
     }];
   constructor() {
     console.log('Service ready to use!!');
