@@ -6,25 +6,24 @@ import { HttpModule } from '@angular/http';
 // Rutas
 import { APP_ROUTING } from './app.routes';
 
+
+
 // Componentes
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/shared/navbar/navbar.component';
-import { HomeComponent } from './components/home/home.component';
-import { AboutComponent } from './components/about/about.component';
-import { WorklogComponent } from './components/worklog/worklog.component';
-import { ChartsComponent } from './components/charts/charts.component';
+
+// Modulos
+import { LoginComponent } from './login/login.component';
+import { PagesModule } from './pages/pages.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    HomeComponent,
-    AboutComponent,
-    WorklogComponent,
-    ChartsComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
+    PagesModule,
     FormsModule,
     HttpModule,
     APP_ROUTING
