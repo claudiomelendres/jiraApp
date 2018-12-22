@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+
 
 import { UserService,
          JiraService,
          LoginGuardGuard} from './service.index';
 
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
-    HttpClientModule,
-    LoginGuardGuard
+    HttpClientModule
   ],
   providers: [
     JiraService,

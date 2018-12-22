@@ -40,5 +40,9 @@
 }
 
 .imageCenter {
+    height: 30px;
+}
+
+.logoCenter {
     height: 100px;
 }
