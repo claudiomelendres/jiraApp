@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { JiraService } from '../../services/jira.service';
+import { JiraService } from '../../services/service.index';
 
 @Component({
   selector: 'app-worklog',
