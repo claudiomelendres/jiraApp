@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 })
 export class JiraService {
 
-  private proyectos: any = [
+  private issues: any = [
     {
       name: 'Proyecto 1',
       title: 'BAN 5 (2h)',
@@ -22,7 +22,7 @@ export class JiraService {
     console.log('Service ready to use!!');
   }
 
-  getProyectos(): any {
-    return this.proyectos;
+  getIssues(): any {
+    return this.issues;
   }
 }

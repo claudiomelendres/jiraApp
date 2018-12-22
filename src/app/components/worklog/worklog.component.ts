@@ -1,5 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { JiraService } from '../../services/jira.service';
+import { IssueService } from '../../services/issue.service';
 
 @Component({
   selector: 'app-worklog',
@@ -7,26 +8,29 @@ import { JiraService } from '../../services/jira.service';
 })
 export class WorklogComponent implements OnInit {
 
-  proyectos: any[] = [];
+ issues: any[] = [];
  verticalLayout = false;
 
   constructor(
                private _jiraService: JiraService,
+               private _issueService: IssueService,
                private ngZone: NgZone
               ) {
 
-    window.onresize = (e) =>
-    {
+    window.onresize = (e) => {
         ngZone.run(() => {
-            console.log('[ Width: ' + window.innerWidth + ' Height: ' + window.innerHeight + ']');
             this.verticalLayout = window.innerWidth < 1200;
-            console.log('verticalLayout:' + this.verticalLayout);
         });
     };
+
+    this._issueService.searchIssues().subscribe(rawIssues => {
+        console.log(rawIssues);
+        this.issues = this._issueService.getIssues(rawIssues);
+      }
+    );
 }
 
   ngOnInit() {
-    this.proyectos = this._jiraService.getProyectos();
+    this.issues = this._issueService.getIssues([]);
   }
-
 }
