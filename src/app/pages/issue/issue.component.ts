@@ -18,6 +18,7 @@ export class IssueComponent implements OnInit {
    isCollapsed = true;
    newSpentTime = 0;
    labelSpentTime = '0';
+   labelWarning = '';
 
   constructor(private _jiraService: JiraService) {
   }
@@ -44,5 +45,11 @@ export class IssueComponent implements OnInit {
 
     this.updatePanel();
     this.saveChangesUpdate.emit();
+
+    this._jiraService.getIssue(this.issue.key).subscribe(
+      issue => {
+        this.labelWarning = this._jiraService.getTrackingTimeWarning(issue);
+      }
+    );
   }
 }
