@@ -1,28 +1,68 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
-// here all methods to consume the API of Jira
+const CONTENT_TYPE = 'application/json';
+const URL_BASE = 'http://localhost:4200';
+const AUTHORIZATION = 'Basic bWNsYXVyZUBnbWFpbC5jb206YWxzaWUyMDE4';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class JiraService {
 
-  private proyectos: any = [
-    {
-      nombre: 'Proyecto 1',
-      Historias: 'historia 2',
-      Horas: '30'
-    },
-    {
-      nombre: 'Proyecto 2',
-      Historias: 'historia 2',
-      Horas: '30'
-    }];
-  constructor() {
-    console.log('Service ready to use!!');
+  private issues: any = [];
+
+  constructor(private http: HttpClient) {
+    console.log('Issue List Service ready to use!!');
   }
 
-  getProyectos(): any {
-    return this.proyectos;
+  searchIssues() {
+    const url = URL_BASE + '/rest/api/2/search';
+    const body = JSON.stringify({
+        jql: 'project = JIR AND issuetype = Story ORDER BY key ASC',
+        startAt: 0,
+        maxResults: 20,
+        fields: [
+            'key',
+            'summary'
+        ]
+    });
+
+    return this.http.post(url, body, {
+      headers: new HttpHeaders({
+        'Authorization': AUTHORIZATION,
+        'Content-Type': CONTENT_TYPE
+      })
+    });
+  }
+
+  getIssue(issueID: string) {
+    const url = URL_BASE + '/rest/api/2/issue/' + issueID;
+
+    return this.http.get(url, {
+      headers: new HttpHeaders({
+        'Content-Type': CONTENT_TYPE,
+        'Authorization': AUTHORIZATION
+      })
+    });
+  }
+
+  getAllIssues(rawIssues: any): any {
+    this.issues = [];
+    if (rawIssues['issues']) {
+      if (rawIssues['issues'].length > 0) {
+        for (const item of rawIssues['issues']) {
+          this.issues.push({
+                            name:  item.key,
+                            title: item.key,
+                            hours: 0
+                          });
+        }
+      }
+    }
+
+    return this.issues;
   }
 }

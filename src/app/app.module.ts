@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 // Rutas
 import { APP_ROUTING } from './app.routes';
@@ -18,9 +19,10 @@ import { PagesModule } from './pages/pages.module';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     PagesModule,
     FormsModule,
