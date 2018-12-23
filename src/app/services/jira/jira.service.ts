@@ -125,9 +125,8 @@ export class JiraService {
     let spentSeconds = values[4].timetracking.timeSpentSeconds;
     estimatedSeconds = estimatedSeconds * (PERCENTAGE_TIME_OVERDUE / 100 + 1);
     let labelWarning = '';
-
     if (spentSeconds > estimatedSeconds) {
-      labelWarning = 'Warning: time consumed is close to time estimated.'
+      labelWarning = 'Warning: time consumed is close to time estimated.';
     }
     console.log("Estimated seconds:" + estimatedSeconds);
     console.log("Time spent:" + spentSeconds);
