@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 const CONTENT_TYPE = 'application/json';
+const URL_BASE = 'http://localhost:4200';
+const AUTHORIZATION = 'Basic bWNsYXVyZUBnbWFpbC5jb206YWxzaWUyMDE4';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class IssueService {
   private issues: any = [];
 
   searchIssues() {
-    const url = 'http://localhost:4200/rest/api/2/search';
+    const url = URL_BASE + '/rest/api/2/search';
     const body = JSON.stringify({
         jql: 'project = BM AND issuetype = Story ORDER BY key ASC',
         startAt: 0,
@@ -29,8 +31,19 @@ export class IssueService {
 
     return this.http.post(url, body, {
       headers: new HttpHeaders({
-        'Authorization': 'Basic bWNsYXVyZUBnbWFpbC5jb206YWxzaWUyMDE4',
+        'Authorization': AUTHORIZATION,
         'Content-Type': CONTENT_TYPE
+      })
+    });
+  }
+
+  getIssue(issueID: string) {
+    const url = URL_BASE + '/rest/api/2/issue/' + issueID;
+
+    return this.http.get(url, {
+      headers: new HttpHeaders({
+        'Content-Type': CONTENT_TYPE,
+        'Authorization': AUTHORIZATION
       })
     });
   }

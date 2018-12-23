@@ -24,13 +24,12 @@ export class WorklogComponent implements OnInit {
     };
 
     this._issueService.searchIssues().subscribe(rawIssues => {
-        console.log(rawIssues);
         this.issues = this._issueService.getIssues(rawIssues);
       }
     );
 }
 
   ngOnInit() {
-    this.issues = this._issueService.getIssues([]);
+    this.issues = [];
   }
 }
