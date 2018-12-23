@@ -14,6 +14,12 @@
                         <input ngModel name="password" class="form-control" type="password" required placeholder="Password">
                     </div>
                 </div>
+                <div class="form-group" *ngIf="InvalidLoginPassword">
+                  <p class="text-danger">
+                    User or Password invalid
+                  </p>
+                </div>
+
                 <!-- <div class="form-group row">
                     <div class="col-md-12">
                         <div class="checkbox checkbox-primary pull-left p-t-0">
@@ -24,7 +30,7 @@
                 </div> -->
                 <div class="form-group text-center m-t-20">
                     <div class="col-xs-12">
-                        <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit">Log In</button>
+                        <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit">Log In.</button>
                     </div>
                 </div>
                 <div class="row">
