@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+  InvalidLoginPassword: boolean = false;
   constructor(
     public router: Router,
     public _userService: UserService) {
@@ -35,7 +36,12 @@ export class LoginComponent implements OnInit {
     const user = new User(null, forma.value.email, forma.value.password );
 
     this._userService.login( user.email, user.password )
-                  .subscribe( correct => this.router.navigate(['/home'])  );
+                  .subscribe( correct => {
+                    this.router.navigate(['/home']);
+                  }, incorrect => {
+                    console.log('incorrect');
+                    this.InvalidLoginPassword = true;
+                  });
 
   }
 

@@ -8,7 +8,7 @@ import { User } from 'src/app/models/user.model';
 @Injectable()
 export class UserService {
 
-  user: string;
+  public userName: string;
   token: string = '';
   CONTENT_TYPE = 'application/json';
 
@@ -21,6 +21,7 @@ export class UserService {
   }
 
   isLogged() {
+    console.log(this.token.length);
     return this.token.length > 0 ? true : false ;
   }
 
@@ -36,13 +37,14 @@ export class UserService {
       })}).map( (resp: any) => {
         // console.log(resp.session.value);
         this.token = resp.session.value;
-        this.user = username;
+        this.userName = username;
         return true;
       });
   }
 
   logout() {
-    this.user = '';
+    console.log('go out!!');
+    this.userName = '';
     this.token = '';
     this.router.navigate(['/login']);
   }
