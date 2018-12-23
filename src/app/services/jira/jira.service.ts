@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
+import {forkJoin} from 'rxjs/observable/forkJoin';
 
 const CONTENT_TYPE = 'application/json';
 const URL_BASE = 'http://localhost:4200';
@@ -18,6 +19,7 @@ export class JiraService {
     console.log('Issue List Service ready to use!!');
   }
 
+  // JIRA API Services
   searchIssues() {
     const url = URL_BASE + '/rest/api/2/search';
     const body = JSON.stringify({
@@ -49,20 +51,56 @@ export class JiraService {
     });
   }
 
+   requestAllWorkLogData(issues: any[]): Observable<any[]> {
+    const requests: any = [];
+    for (const issue of issues) {
+      requests.push(this.getIssue(issue.key));
+    }
+    return forkJoin(requests);
+  }
+
+  // JIRA HELPERS
+
   getAllIssues(rawIssues: any): any {
     this.issues = [];
     if (rawIssues['issues']) {
       if (rawIssues['issues'].length > 0) {
         for (const item of rawIssues['issues']) {
           this.issues.push({
-                            name:  item.key,
-                            title: item.key,
-                            hours: 0
+                              key:  item.key,
+                              title: item.fields.summary,
+                              hours: 0
                           });
         }
       }
     }
-
     return this.issues;
+  }
+
+  getWorklogTotal(workLogs: any): any {
+   let  total = 0;
+    for (const item of workLogs) {
+      if (item.timeSpentSeconds) {
+        total += item.timeSpentSeconds;
+      }
+    }
+    return this.builNewSpendTime(total);
+  }
+
+  builNewSpendTime(seconds: number): any {
+    let output = '';
+    const days = Math.floor( ( seconds / 3600 ) / 24 );
+    if ( days >= 1 ) {
+      output += days.toString() + 'd ';
+      seconds -= days * 24 * 3600;
+    }
+    const hours = Math.floor( seconds / 3600 );
+    output += hours + 'h ';
+    seconds -= hours * 3600;
+
+    const minutes = Math.floor( seconds / 60 );
+    output += minutes + 'm ';
+
+    return output;
   }
 }
