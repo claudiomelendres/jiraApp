@@ -1,6 +1,17 @@
+<div *ngIf="issues.length == 0" class="container-fluid">
+  <div class="row">
+      <h5>
+      <div class="col text-left text-primary">
+          NO DATA FOUND
+      </div>
+      </h5>
+  </div>
+</div>
 <app-issue
      *ngFor="let issue of issues; let i = index"
      [issue]="issue"
      [verticalLayout]="verticalLayout"
-     [id]="i">
+     [id]="i"
+     (editModeUpdated)="onEditModeUpdate($event)"
+     (saveChangesUpdate)="onSaveChangesUpdate()">
 </app-issue>

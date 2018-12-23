@@ -1,4 +1,4 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { Component, Input,  Output, OnInit, EventEmitter} from '@angular/core';
 import { JiraService } from '../../services/service.index';
 
 @Component({
@@ -8,6 +8,8 @@ import { JiraService } from '../../services/service.index';
 })
 
 export class IssueComponent implements OnInit {
+  @Output() editModeUpdated = new EventEmitter<{editMode: boolean}>();
+  @Output() saveChangesUpdate = new EventEmitter();
   @Input() issue: {key: string, title: string, hours: number};
   @Input() verticalLayout: boolean;
   @Input() id: string;
@@ -25,12 +27,22 @@ export class IssueComponent implements OnInit {
     this.newSpentTime = 0;
   }
 
+  updatePanel() {
+    this.isCollapsed = !this.isCollapsed;
+    console.log('Emitting the mode change to: ' + !this.isCollapsed);
+    this.editModeUpdated.emit({editMode: !this.isCollapsed});
+  }
+
   addSpentTime(seconds: number) {
     this.newSpentTime = this.newSpentTime + seconds;
     this.labelSpentTime = this._jiraService.builNewSpendTime(this.newSpentTime);
   }
 
   saveChanges() {
-    console.log('Changes Saved for ' + this.issue.key);
+    this._jiraService.addWorkLog(this.issue.key, this.newSpentTime).subscribe(response => {
+    });
+
+    this.updatePanel();
+    this.saveChangesUpdate.emit();
   }
 }
