@@ -23,8 +23,20 @@ export class WorklogComponent implements OnInit {
 
     this._jiraService.searchIssues().subscribe(rawIssues => {
         this.issues = this._jiraService.getAllIssues(rawIssues);
-      }
-    );
+          this._jiraService.requestAllWorkLogData(this.issues).subscribe(workLogList => {
+            for (let i = 0; i < workLogList.length; i++) {
+              if (workLogList[i].fields) {
+               if (workLogList[i].fields.worklog) {
+                if (workLogList[i].fields.worklog.worklogs) {
+                  if (workLogList[i].fields.worklog.worklogs.length > 0) {
+                    this.issues[i].hours = this._jiraService.getWorklogTotal(workLogList[i].fields.worklog.worklogs);
+                  }
+                }
+               }
+              }
+            }
+          });
+    });
 }
 
   ngOnInit() {
