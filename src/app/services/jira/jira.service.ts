@@ -6,7 +6,7 @@ import {forkJoin} from 'rxjs/observable/forkJoin';
 const CONTENT_TYPE = 'application/json';
 const URL_BASE = 'http://localhost:4200';
 const AUTHORIZATION = 'Basic bWNsYXVyZUBnbWFpbC5jb206YWxzaWUyMDE4';
-const ELAPSED_TIME_PERCENTAGE_WARNING = 10;
+const PERCENTAGE_TIME_OVERDUE = 10;
 
 @Injectable({
   providedIn: 'root'
@@ -121,15 +121,17 @@ export class JiraService {
 
   getTrackingTimeWarning(issue: any): string {
     const values = Object.keys(issue).map(key => issue[key]);
-    let etimatedSeconds = values[4].timetracking.originalEstimateSeconds;
+    let estimatedSeconds = values[4].timetracking.originalEstimateSeconds;
     let spentSeconds = values[4].timetracking.timeSpentSeconds;
-    let percent = spentSeconds / etimatedSeconds * 100;
+    estimatedSeconds = estimatedSeconds * (PERCENTAGE_TIME_OVERDUE / 100 + 1);
     let labelWarning = '';
 
-    if (percent < ELAPSED_TIME_PERCENTAGE_WARNING) {
+    if (spentSeconds > estimatedSeconds) {
       labelWarning = 'Warning: time consumed is close to time estimated.'
     }
-    
+    console.log("Estimated seconds:" + estimatedSeconds);
+    console.log("Time spent:" + spentSeconds);
+
     return labelWarning;
   }
 }
