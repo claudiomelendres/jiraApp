@@ -1,6 +1,6 @@
 {
     "/rest": {
-        "target": "https://claudiomelendres.atlassian.net",
+        "target": "https://mclaure.atlassian.net",
         "secure": false,
         "logLevel": "debug",
         "headers": {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { JiraService } from '../../services/service.index';
 
 @Component({
@@ -7,16 +7,27 @@ import { JiraService } from '../../services/service.index';
 })
 export class WorklogComponent implements OnInit {
 
-  proyectos: any[] = [];
+ issues: any[] = [];
+ verticalLayout = false;
 
   constructor(
-    private _jiraService: JiraService
-  ) {
+               private _jiraService: JiraService,
+               private ngZone: NgZone
+              ) {
 
-   }
+    window.onresize = (e) => {
+        ngZone.run(() => {
+            this.verticalLayout = window.innerWidth < 1200;
+        });
+    };
+
+    this._jiraService.searchIssues().subscribe(rawIssues => {
+        this.issues = this._jiraService.getAllIssues(rawIssues);
+      }
+    );
+}
 
   ngOnInit() {
-    this.proyectos = this._jiraService.getProyectos();
+    this.issues = [];
   }
-
 }
