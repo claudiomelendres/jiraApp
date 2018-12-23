@@ -59,6 +59,20 @@ export class JiraService {
     return forkJoin(requests);
   }
 
+  addWorkLog(issueId: string, spentTime: number) {
+    const url = URL_BASE + '/rest/api/2/issue/' + issueId + '/worklog';
+    const body = JSON.stringify({
+      timeSpentSeconds: spentTime // value in seconds
+    });
+
+    return this.http.post(url, body, {
+      headers: new HttpHeaders({
+        'Content-Type': CONTENT_TYPE,
+        'Authorization': AUTHORIZATION
+      })
+    });
+  }
+
   // JIRA HELPERS
 
   getAllIssues(rawIssues: any): any {
@@ -102,19 +116,5 @@ export class JiraService {
     output += minutes + 'm ';
 
     return output;
-  }
-
-  addWorkLog(issueId: string, spentTime: number) {
-    let url = URL_BASE + '/rest/api/2/issue/' + issueId + '/worklog';
-    let body = JSON.stringify({
-      timeSpentSeconds: spentTime // value in seconds
-    });
-
-    return this.http.post(url, body, {
-      headers: new HttpHeaders({
-        'Content-Type': CONTENT_TYPE,
-        'Authorization': AUTHORIZATION
-      })
-    });
   }
 }
