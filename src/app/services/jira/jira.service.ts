@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { URL_SERVICE, CONTENT_TYPE, AUTHORIZATION} from '../../config/config';
+import { URL_SERVICE, CONTENT_TYPE, AUTHORIZATION, PERCENTAGE_TIME_OVERDUE} from '../../config/config';
 import { Observable } from 'rxjs/Observable';
 import {forkJoin} from 'rxjs/observable/forkJoin';
 
@@ -113,5 +113,20 @@ export class JiraService {
     output += minutes + 'm ';
 
     return output;
+  }
+
+  getTrackingTimeWarning(issue: any): string {
+    const values = Object.keys(issue).map(key => issue[key]);
+    let estimatedSeconds = values[4].timetracking.originalEstimateSeconds;
+    const spentSeconds = values[4].timetracking.timeSpentSeconds;
+    estimatedSeconds = estimatedSeconds * (PERCENTAGE_TIME_OVERDUE / 100 + 1);
+    let labelWarning = '';
+    if (spentSeconds > estimatedSeconds) {
+      labelWarning = 'Warning: time consumed is close to time estimated.';
+    }
+    console.log('Estimated seconds: ' + estimatedSeconds);
+    console.log('Time spent:' + spentSeconds);
+
+    return labelWarning;
   }
 }

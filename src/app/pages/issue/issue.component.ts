@@ -1,5 +1,6 @@
 import { Component, Input,  Output, OnInit, EventEmitter} from '@angular/core';
 import { JiraService } from '../../services/service.index';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-issue',
@@ -18,6 +19,7 @@ export class IssueComponent implements OnInit {
    isCollapsed = true;
    newSpentTime = 0;
    labelSpentTime = '0';
+   labelWarning = '';
 
   constructor(private _jiraService: JiraService) {
   }
@@ -44,5 +46,14 @@ export class IssueComponent implements OnInit {
 
     this.updatePanel();
     this.saveChangesUpdate.emit();
+
+    this._jiraService.getIssue(this.issue.key).subscribe(
+      issue => {
+        this.labelWarning = this._jiraService.getTrackingTimeWarning(issue);
+        if (this.labelWarning.length > 0 ) {
+          swal('Important!!!' , 'time consumed is more of 10% to time estimated.', 'warning');
+        }
+      }
+    );
   }
 }
