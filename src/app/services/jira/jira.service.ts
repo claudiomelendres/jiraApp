@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { URL_SERVICE, CONTENT_TYPE, AUTHORIZATION, USER_AGENT } from '../../config/config';
+import { URL_SERVICE, CONTENT_TYPE, AUTHORIZATION} from '../../config/config';
 import { Observable } from 'rxjs/Observable';
 import {forkJoin} from 'rxjs/observable/forkJoin';
 
@@ -32,8 +32,7 @@ export class JiraService {
     return this.http.post(url, body, {
       headers: new HttpHeaders({
         'Authorization': AUTHORIZATION,
-        'Content-Type': CONTENT_TYPE,
-        'User-Agent': USER_AGENT
+        'Content-Type': CONTENT_TYPE
       })
     });
   }
@@ -44,8 +43,7 @@ export class JiraService {
     return this.http.get(url, {
       headers: new HttpHeaders({
         'Content-Type': CONTENT_TYPE,
-        'Authorization': AUTHORIZATION,
-        'User-Agent': USER_AGENT
+        'Authorization': AUTHORIZATION
       })
     });
   }
@@ -67,8 +65,7 @@ export class JiraService {
     return this.http.post(url, body, {
       headers: new HttpHeaders({
         'Content-Type': CONTENT_TYPE,
-        'Authorization': AUTHORIZATION,
-        'User-Agent': USER_AGENT
+        'Authorization': AUTHORIZATION
       })
     });
   }

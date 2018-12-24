@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { URL_SERVICE, USER_AGENT, CONTENT_TYPE } from '../../config/config';
+import { URL_SERVICE, CONTENT_TYPE } from '../../config/config';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
@@ -33,8 +33,7 @@ export class UserService {
     });
     return this.http.post(url, body, {
       headers: new HttpHeaders({
-        'Content-Type': CONTENT_TYPE,
-        'User-Agent': USER_AGENT
+        'Content-Type': CONTENT_TYPE
       })}).map( (resp: any) => {
         // console.log(resp.session.value);
         this.token = resp.session.value;
