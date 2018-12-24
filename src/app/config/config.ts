@@ -1,3 +1,3 @@
-export const URL_SERVICE = 'https://jiraapp01.herokuapp.com';
+export const URL_SERVICE = 'http://localhost:8080';
 export const CONTENT_TYPE = 'application/json';
-export const AUTHORIZATION = 'Basic bWNsYXVyZUBnbWFpbC5jb206YWxzaWUyMDE4';
+export const AUTHORIZATION = 'Basic Y2xhdWRpb21lbGVuZHJlc0BnbWFpbC5jb206SW5mb3JtYXRpY2EzMjEwLg==';
