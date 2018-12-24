@@ -39,7 +39,7 @@
      <div class="col text-right">
         <strong>{{ labelSpentTime }}</strong>
     </div>
-    <div class="col text-right">
-            <strong>{{ labelWarning }}</strong>
+    <div *ngIf="labelWarning.length>0" class="col text-right">
+        <strong>{{ labelWarning }}</strong>
     </div>
 </div>

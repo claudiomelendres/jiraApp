@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { URL_SERVICE, CONTENT_TYPE, AUTHORIZATION, PERCENTAGE_TIME_OVERDUE} from '../../config/config';
 import { Observable } from 'rxjs/Observable';
 import {forkJoin} from 'rxjs/observable/forkJoin';
-
-const CONTENT_TYPE = 'application/json';
-const URL_BASE = 'http://localhost:4200';
-const AUTHORIZATION = 'Basic bWNsYXVyZUBnbWFpbC5jb206YWxzaWUyMDE4';
-const PERCENTAGE_TIME_OVERDUE = 10;
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +18,7 @@ export class JiraService {
 
   // JIRA API Services
   searchIssues() {
-    const url = URL_BASE + '/rest/api/2/search';
+    const url = URL_SERVICE + '/rest/api/2/search';
     const body = JSON.stringify({
         jql: 'project = JIR AND issuetype = Story ORDER BY key ASC',
         startAt: 0,
@@ -42,7 +38,7 @@ export class JiraService {
   }
 
   getIssue(issueID: string) {
-    const url = URL_BASE + '/rest/api/2/issue/' + issueID;
+    const url = URL_SERVICE + '/rest/api/2/issue/' + issueID;
 
     return this.http.get(url, {
       headers: new HttpHeaders({
@@ -61,7 +57,7 @@ export class JiraService {
   }
 
   addWorkLog(issueId: string, spentTime: number) {
-    const url = URL_BASE + '/rest/api/2/issue/' + issueId + '/worklog';
+    const url = URL_SERVICE + '/rest/api/2/issue/' + issueId + '/worklog';
     const body = JSON.stringify({
       timeSpentSeconds: spentTime // value in seconds
     });
@@ -122,14 +118,14 @@ export class JiraService {
   getTrackingTimeWarning(issue: any): string {
     const values = Object.keys(issue).map(key => issue[key]);
     let estimatedSeconds = values[4].timetracking.originalEstimateSeconds;
-    let spentSeconds = values[4].timetracking.timeSpentSeconds;
+    const spentSeconds = values[4].timetracking.timeSpentSeconds;
     estimatedSeconds = estimatedSeconds * (PERCENTAGE_TIME_OVERDUE / 100 + 1);
     let labelWarning = '';
     if (spentSeconds > estimatedSeconds) {
       labelWarning = 'Warning: time consumed is close to time estimated.';
     }
-    console.log("Estimated seconds:" + estimatedSeconds);
-    console.log("Time spent:" + spentSeconds);
+    console.log('Estimated seconds: ' + estimatedSeconds);
+    console.log('Time spent:' + spentSeconds);
 
     return labelWarning;
   }
